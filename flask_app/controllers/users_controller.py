@@ -28,10 +28,6 @@ def register_user():
 # Login route - POST
 @app.route("/users/login", methods=["POST"])
 def login():
-    # session validation
-    if not "user_id" in session:
-        return redirect("/")
-
     email = request.form["login_email"]
     if not User.validate_login_email(email):
         return redirect("/")
@@ -114,10 +110,6 @@ def display_user_trees():
 # ADD the tree_id and user_id to the visitors table - POST
 @app.route("/users/<int:tree_id>/visited/add", methods=["POST"])
 def add_to_visits(tree_id):
-    # session validation
-    if not "user_id" in session:
-        return redirect("/")
-
     User.add_tree_to_visits({"user_id": session["user_id"], "tree_id": tree_id})
 
     return redirect(f"/trees/{tree_id}/view")

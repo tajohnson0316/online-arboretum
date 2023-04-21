@@ -20,10 +20,6 @@ def display_new_tree_form():
 # Submit NEW TREE info - POST
 @app.route("/trees/new/add", methods=["POST"])
 def add_new_tree():
-    # session validation
-    if not "user_id" in session:
-        return redirect("/")
-
     # tree form validation
     if not tree_model.Tree.validate_tree(request.form):
         return redirect("/trees/new/form")
@@ -38,10 +34,6 @@ def add_new_tree():
 # DELETE a user's tree - POST
 @app.route("/trees/<int:id>/delete", methods=["POST"])
 def delete_tree(id):
-    # session validation
-    if not "user_id" in session:
-        return redirect("/")
-
     tree_model.Tree.delete_one({"id": id})
 
     return redirect("/user/my-trees/view")
@@ -97,10 +89,6 @@ def display_edit_tree_form(id):
 # UPDATE tree info - POST
 @app.route("/trees/<int:id>/edit/submit", methods=["POST"])
 def update_tree(id):
-    # session validation
-    if not "user_id" in session:
-        return redirect("/")
-
     # tree form validation
     if not tree_model.Tree.validate_tree(request.form):
         return redirect(f"/trees/{id}/edit")
